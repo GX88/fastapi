@@ -1,0 +1,17 @@
+from .Mixin import TimestampMixin, fields
+
+
+class Article(TimestampMixin):
+    id = fields.IntField(pk=True, description="主键")
+    title = fields.CharField(max_length=100, description="标题")
+    description = fields.CharField(max_length=150, description="摘要")
+    content = fields.TextField(description="内容")
+    is_top = fields.IntField(default=0, description="是否置顶 0否 1是")
+    is_show = fields.IntField(default=0, description="是否显示 0否 1是")
+    img_src= fields.CharField(max_length=255, null=True, description="图片地址")
+    views = fields.IntField(description="浏览次数")
+    font_count = fields.IntField(description="字数统计")
+
+    class Meta:
+        table = "restart_article"
+        table_description = "文章表"
