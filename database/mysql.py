@@ -8,7 +8,7 @@ ORM_CONFIG = {
             "credentials": {
                 'host': "localhost",
                 'user': "root",
-                'password': "199907173030bz",
+                'password': "123456",
                 'port': 3306,
                 'database': "fastapi",
             }

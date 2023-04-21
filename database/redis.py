@@ -76,9 +76,9 @@ class RedisCli(object):
 
 # 创建redis连接对象
 redis_client = RedisCli(
-    host='127.0.0.1',
+    host='43.155.168.243',
     port=6379,
-    password='',
+    password='199907173030bz',
     db=0,
     socket_timeout=5
 )

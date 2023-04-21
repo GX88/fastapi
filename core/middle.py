@@ -6,6 +6,8 @@
 """
 from starlette.types import ASGIApp, Receive, Scope, Send, Message
 from fastapi import Request
+from user_agents import parse
+from models import Log
 
 
 class ApiLogger(object):
@@ -17,10 +19,11 @@ class ApiLogger(object):
             await self.app(scope, receive, send)
             return
 
-        print(scope['client'][0])
-        # 获取请求浏览器
-        user_agent = scope['headers'][5][1].decode()
-        print(user_agent)
+        ip = scope['client'][0]
+        method = scope['method']
+        path = scope['path']
+        user_agent = parse(scope['headers'][5][1].decode('utf-8'))
+        device, system,browser = str(user_agent).split('/')
 
         # 打印请求来源
 
@@ -29,10 +32,12 @@ class ApiLogger(object):
         async def send_wrapper(message: Message) -> None:
             if message['type'] == 'http.response.start':
                 # 获取响应状态码
-                status_code = message['status']
-                if 200 <= status_code < 400:
+                status = message['status']
+                await Log.create(ip=ip, method=method, path=path, status=status, device=device, system=system,
+                                 browser=browser)
+                if 200 <= status < 400:
                     # 如果请求成功，则打印请求成功信息
-                    print(status_code, user_agent)
+                    ...
                 else:
                     # 如果请求失败，则打印请求失败信息
                     print("Request failed")
