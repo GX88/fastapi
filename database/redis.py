@@ -1,12 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # @Time    : 2021/1/28 20:34
-# @Author  : CoderCharm
-# @File    : sys_redis.py
+# @Author  : 白哲
+# @File    : redis.py
 # @Software: PyCharm
-# @Github  : github/CoderCharm
-# @Email   : wg_python@163.com
-# @Desc    :
+# @Desc    : 实现Redis集成到Fastapi中
 """
 
 通过class 实例化对象可以直接修改内部属性的特性
@@ -76,9 +74,9 @@ class RedisCli(object):
 
 # 创建redis连接对象
 redis_client = RedisCli(
-    host='43.155.168.243',
+    host='localhost',
     port=6379,
-    password='199907173030bz',
+    password='',
     db=0,
     socket_timeout=5
 )

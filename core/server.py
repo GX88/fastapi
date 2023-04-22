@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
 from database import register_mysql, redis_client
-from core.middle import ApiLogger
+from core.middle import Middle
 from router import Router
 from utils import logger
 
@@ -22,7 +22,6 @@ def create_app() -> MyFastAPI:
 
     # TODO: 注册中间件
     register_middleware(app)
-
 
     # TODO: 注册路由
     app.include_router(Router)
@@ -74,4 +73,4 @@ def register_middleware(app: MyFastAPI):
         allow_headers=["*"]
     )
 
-    app.add_middleware(ApiLogger)
+    app.add_middleware(Middle)

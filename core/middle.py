@@ -10,7 +10,7 @@ from user_agents import parse
 from models import Log
 
 
-class ApiLogger(object):
+class Middle(object):
     def __init__(self, app: ASGIApp) -> None:
         self.app = app
 
@@ -23,7 +23,7 @@ class ApiLogger(object):
         method = scope['method']
         path = scope['path']
         user_agent = parse(scope['headers'][5][1].decode('utf-8'))
-        device, system,browser = str(user_agent).split('/')
+        device, system, browser = str(user_agent).split('/')
 
         # 打印请求来源
 
