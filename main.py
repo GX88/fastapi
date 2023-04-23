@@ -1,10 +1,15 @@
 from core import create_app
-from fastapi import FastAPI
+import config as f
 
 app = create_app()
 
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app='main:app', host="localhost", port=8010, reload=True, lifespan="on")
+    uvicorn.run(
+        app='main:app',
+        host=f.APP_HOST,
+        port=f.APP_PORT,
+        reload=f.APP_RELOAD
+    )
 

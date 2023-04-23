@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
+import config as f
 
 from database import register_mysql, redis_client
 from core.middle import Middle
@@ -15,7 +16,12 @@ class MyFastAPI(FastAPI):
 
 
 def create_app() -> MyFastAPI:
-    app = MyFastAPI()
+    app = MyFastAPI(
+        debug=f.APP_DEBUG,
+        title=f.DOCS_TITLE,
+        description=f.DOCS_DESC,
+        docs_url=f.DOCS_URL
+    )
 
     # TODO: 添加事件监听事件
     register_init(app)
@@ -42,7 +48,7 @@ def register_init(app: MyFastAPI):
         启动事件
         :return: None
         """
-        app.logger.info("fastapi正在启动")
+        app.logger.info("FastAPI已启动")
 
         # TODO: 初始化数据连接
         await register_mysql(app)
@@ -56,7 +62,7 @@ def register_init(app: MyFastAPI):
         :return: None
         """
         app.redis.close()
-        app.logger.info("fastapi已关闭\n")
+        app.logger.info("FastAPI已关闭\n")
 
 
 def register_middleware(app: MyFastAPI):
@@ -67,7 +73,7 @@ def register_middleware(app: MyFastAPI):
 
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],
+        allow_origins=f.ORIGINS,
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"]

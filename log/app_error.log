@@ -62,3 +62,6 @@ ERROR:   2023-04-20 23:00:27,940 - redis.py:55行 - redis连接失败: Error 61 
 ERROR:   2023-04-20 23:01:44,299 - redis.py:55行 - redis连接失败: Error 61 connecting to 127.0.0.1:6379. Connection refused.
 ERROR:   2023-04-20 23:03:29,972 - redis.py:55行 - redis连接失败: Error 61 connecting to 127.0.0.1:6379. Connection refused.
 ERROR:   2023-04-20 23:07:44,274 - redis.py:55行 - redis连接失败: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+ERROR:   2023-04-23 10:11:24,159 - redis.py:53行 - redis连接失败: Error 10061 connecting to localhost:6379. 由于目标计算机积极拒绝，无法连接。.
+ERROR:   2023-04-23 10:12:07,423 - redis.py:53行 - redis连接失败: Authentication required.
+ERROR:   2023-04-23 10:15:37,373 - redis.py:53行 - Redis连接失败: Timeout reading from socket

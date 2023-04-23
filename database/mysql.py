@@ -1,16 +1,16 @@
-from tortoise.exceptions import DBConnectionError
 from tortoise.contrib.fastapi import register_tortoise
+import config as f
 
 ORM_CONFIG = {
     "connections": {
         "base": {
             'engine': 'tortoise.backends.mysql',
             "credentials": {
-                'host': "localhost",
-                'user': "root",
-                'password': "199907173030bz",
-                'port': 3306,
-                'database': "fastapi",
+                'host': f.MYSQL_HOST,
+                'user': f.MYSQL_USER,
+                'password': f.MYSQL_PASSWORD,
+                'port': f.MYSQL_PORT,
+                'database': f.MYSQL_DB,
             }
         }
     },

@@ -16,7 +16,7 @@ https://github.com/underyx/flask-redis/blob/master/flask_redis/client.py
 redis 连接
 
 """
-import sys
+import config as f
 from redis import Redis, AuthenticationError
 
 
@@ -47,10 +47,10 @@ class RedisCli(object):
                 decode_responses=True  # 解码
             )
             if not self._redis_client.ping():
-                logger.error("redis连接失败")
-            logger.info("redis连接成功")
+                logger.error("Redis连接失败")
+            logger.info("Redis连接成功")
         except (AuthenticationError, Exception) as e:
-            logger.error(f"redis连接失败: {e}")
+            logger.error(f"Redis连接失败: {e}")
 
     def close(self) -> None:
         self._redis_client.close()
@@ -74,11 +74,11 @@ class RedisCli(object):
 
 # 创建redis连接对象
 redis_client = RedisCli(
-    host='localhost',
-    port=6379,
-    password='',
-    db=0,
-    socket_timeout=5
+    host=f.REDIS_HOST,
+    port=f.REDIS_PORT,
+    password=f.REDIS_PASSWORD,
+    db=f.REDIS_DB,
+    socket_timeout=f.REDIS_SOCKET_TIMEOUT
 )
 
 # 只允许导出 redis_client 实例化对象
