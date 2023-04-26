@@ -1,6 +1,5 @@
 
 .idea/
-*.log
-/log
+/log/*
 
 /config/dev.py

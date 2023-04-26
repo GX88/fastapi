@@ -36,7 +36,7 @@ class initdb(object):
             self.create_table()
 
     def create_table(self) -> bool:
-        if os.system('aerich init -t %s' % self.orm) != 0:
+        if os.system('c init -t %s' % self.orm) != 0:
             print("""\033[31m 当您看到此信息时，说明 aerich 初始化错误，但是我并不能为你捕获此错误; 但导致出现问题出现的原因有：
                 1. TORTOISE_ORM配置的位置错误, 您可能把配置变成了路径，但他实质为 文件夹.文件.配置名称
                 2. 不存在此文件夹

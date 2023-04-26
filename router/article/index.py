@@ -5,6 +5,7 @@ from .type import ArticleGetAll, ArticleCreate
 
 article = APIRouter(prefix='/article')
 
+
 @article.get('', summary="查询全部文章", response_model=List[ArticleGetAll])
 async def index():
     a = await Article.all()
