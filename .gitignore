@@ -2,4 +2,8 @@
 .idea/
 /log/*
 
+# Ignore all .pyc files
+*.lock
+Pipfile
+
 /config/dev.py
