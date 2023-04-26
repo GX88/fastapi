@@ -63,8 +63,45 @@ python3 main.py
 ### illustrate - 1
 #### `Directory Structure`
 
-- fastapi
-- ├── config
-- │   ├── __init__.py # Configuration file initialization
-- │   ├── dev.py  # Development environment configuration
-- │   ├── prod.py  # Production environment configuration
+```
+fastapi
+├── config  # Configuration file
+│  ├── __init__.py  # Configuration file initialization
+|  ├── dev.py  # Development environment configuration
+|  ├── prod.py  # Production environment configuration
+├── core  # Core file
+│  ├── __init__.py  # Core file initialization
+|  ├── middle.py  # Middleware
+|  ├── server.py  # Program initialization file
+├── database  # Database
+│  ├── __init__.py  # Database initialization
+|  ├── mysql.py  # MySQL database
+|  ├── redis.py  # Redis database
+├── model  # Database model
+│  ├── __init__.py  # Database model initialization
+|  ├── article.py  # Article model
+|  ├── comment.py  # Comment model
+|  ├── log.py  # Log model
+|  ├── Mixin.py  # Mixin model
+├── router  # Routing
+│  ├── __init__.py  # Routing initialization
+|  ├── article
+|  │  ├── index.py  # Article routing
+|  │  ├── type.py  # Article type
+|  ├── comment
+|  │  ├── index.py  # Comment routing
+|  │  ├── type.py  # Comment type
+|  ├── log
+|  │  ├── index.py  # Log routing
+|  │  ├── type.py  # Log type
+│  ├── ResponseType.py  # Response type
+│  ├── test.py  # test 
+├── utils  # Tool class
+│  ├── __init__.py  # Tool class initialization
+|  ├── loggers.py  # logger class
+|  ├── paginate.py  # ORM pagination query tool
+├── .gitignore  # git ignore file
+├── main.py  # Program entry
+├── README.md  # Project description
+├── requirements.txt  # Dependent package
+```
