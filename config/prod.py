@@ -29,7 +29,7 @@ APP_HOST = '127.0.0.1'
 APP_PORT = 8010
 APP_DEBUG = False
 APP_RELOAD = False
-DOCS_URL = None
+DOCS_URL = '/docs'
 DOCS_TITLE = '白哲PM | API'
 DOCS_DESC = 'API文档'
 
