@@ -60,8 +60,8 @@ pip3 install -r requirements.txt
 python3 main.py
 ```
 
-### illustrate - 1
-#### `Directory Structure`
+### illustrate
+#### 1. `Directory Structure`
 
 ```
 fastapi
