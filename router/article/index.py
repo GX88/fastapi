@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from typing import List
-from models import Article
-from .type import ArticleGetAll, ArticleCreate
+from models import Article, Tag
+from .type import ArticleGetAll, ArticleCreateWithTags
 
 article = APIRouter(prefix='/article')
 
@@ -13,6 +13,12 @@ async def index():
 
 
 @article.post('', summary="创建文章")
-async def index(model: ArticleCreate):
-    a = await Article.create(**model.dict())
-    return a
+async def index(model: ArticleCreateWithTags):
+    tag_list = model.tags
+    del model.tags
+    post = await Article.create(**model.dict())
+    if tag_list:
+        for tag in tag_list:
+            tag = await Tag.get(id=tag)
+            await post.tags.add(tag)
+    return post

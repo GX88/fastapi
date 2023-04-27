@@ -8,8 +8,7 @@ ORM_CONFIG = {
             'engine': 'tortoise.backends.mysql',
             "credentials": {
                 'host': f.MYSQL_HOST,
-                # 'user': f.MYSQL_USER,
-                'user': 'qweqwe',
+                'user': f.MYSQL_USER,
                 'password': f.MYSQL_PASSWORD,
                 'port': f.MYSQL_PORT,
                 'database': f.MYSQL_DB,
