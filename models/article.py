@@ -10,8 +10,8 @@ class Article(TimestampMixin):
     tags: fields.ManyToManyRelation[Tag] = fields.ManyToManyField(
         'base.Tag', related_name='articles', through='article_tag', description="文章标签中间表", on_delete="CASCADE"
     )
-    is_top = fields.IntField(default=0, description="是否置顶 0否 1是")
-    is_show = fields.IntField(default=1, description="是否显示 0否 1是")
+    is_top = fields.CharField(max_length=1, default=0, description="是否置顶 0否 1是")
+    is_show = fields.CharField(max_length=1, default=1, description="是否显示 0否 1是")
     img_src = fields.CharField(max_length=255, null=True, description="图片地址")
     views = fields.IntField(description="浏览次数")
     font_count = fields.IntField(description="字数统计")
