@@ -1,28 +1,36 @@
+import time
+
 from fastapi import APIRouter
-from typing import List
-
 from tortoise.query_utils import Prefetch
-
+from utils import paginate
 from models import Article, Tag
-from .type import ArticleGetAll, ArticleCreateWithTags, ArticleGet
+from .type import ArticleCreateWithTags, ArticleGet, ArticleList, Article_list
 from ..ResponseType import R
 
 article = APIRouter(prefix='/article')
 
 
-@article.get('/all', summary="查询全部文章")
-async def index():
-    post = await Article.all().group_by('-id')
-    return {
-        'code': 200,
-        'data': post,
-        'success': True,
+# 前端
+@article.get('/all', summary="查询全部文章", response_model=R[Article_list])
+async def index(page: int = 1, page_size: int = 14):
+    filters = {
+        'andlist': {
+            'is_show': 1,
+        }
     }
+    Prefetching = {
+        'name': 'tags',
+        'queryset': Tag,
+    }
+    post = await paginate(Article, ArticleList, filters=filters, Prefetching=Prefetching, order_list=['-id'], page=page,
+                          page_size=page_size)
+
+    return R.unified_response(200, data=post)
 
 
 @article.get('', summary="查询单篇文章", response_model=R[ArticleGet])
 async def index(aid: int):
-    post = await Article.filter(id=aid).prefetch_related(
+    post = await Article.filter(path=aid).prefetch_related(
         Prefetch('tags', queryset=Tag.all())
     ).first()
     if post:

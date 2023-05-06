@@ -33,8 +33,8 @@ class Middle(object):
             if message['type'] == 'http.response.start':
                 # 获取响应状态码
                 status = message['status']
-                await Log.create(ip=ip, method=method, path=path, status=status, device=device, system=system,
-                                 browser=browser)
+                # await Log.create(ip=ip, method=method, path=path, status=status, device=device, system=system,
+                #                  browser=browser)
                 if 200 <= status < 400:
                     # 如果请求成功，则打印请求成功信息
                     ...

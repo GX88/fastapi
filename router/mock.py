@@ -5,7 +5,7 @@ mock = APIRouter()
 
 @mock.post('/login')
 async def login(body: dict):
-    if body.get('user') == "admin":
+    if body.get('username') == "admin":
         return {
             'success': True,
             'data': {
@@ -99,7 +99,7 @@ async def get_router():
                 'name': "LogPage",
                 'meta': {
                     'title': "日志管理",
-                    'roles': ["admin", "common"],
+                    'roles': ["admin"],
                     'auths': ["btn_add", "btn_edit", "btn_delete"]
                 }
             }

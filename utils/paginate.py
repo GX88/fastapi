@@ -4,6 +4,7 @@ from typing import List, Dict
 from tortoise.expressions import Q
 from tortoise import models
 from tortoise.contrib.pydantic import pydantic_model_creator
+from tortoise.query_utils import Prefetch
 
 
 # TODO：待实现多AND与多AND的AND ｜ OR；
@@ -12,6 +13,7 @@ async def paginate(
         model: models,
         schema: pydantic_model_creator,
         filters: Dict = None,
+        Prefetching: Dict = None,
         order_list: List = None,
         page: int = 1,
         page_size: int = 10,
@@ -21,6 +23,7 @@ async def paginate(
     :param model: 数据库模型
     :param schema: 验证模型类
     :param filters: 规则
+    :param Prefetching: 预取
     :param order_list: 排序
     :param page: 页数
     :param page_size: 条数
@@ -66,10 +69,23 @@ async def paginate(
     # 页数
     countPage = math.ceil(total / page_size)
 
-    data = await model.filter(q) \
-        .order_by(*order_list) \
-        .offset((page - 1) * page_size).limit(page_size) \
-        .values(*fields)
+    if Prefetching:
+        data = await model.filter(q) \
+            .order_by(*order_list) \
+            .offset((page - 1) * page_size).limit(page_size) \
+            .prefetch_related(
+                Prefetch(
+                    Prefetching['name'],
+                    queryset=Prefetching['queryset'].all()
+                )
+            )
+        for i in data:
+            i.tag = [j.name for j in i.tags]
+    else:
+        data = await model.filter(q) \
+            .order_by(*order_list) \
+            .offset((page - 1) * page_size).limit(page_size) \
+            .values(*fields)
 
     return {
         'data': data,

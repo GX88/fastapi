@@ -6,6 +6,7 @@ class Comment(models.Model):
     cid = fields.IntField(default=0, description="评论父组级")
     ArticleID = fields.IntField(null=False, description="文章ID")
     talkUser = fields.CharField(max_length=25, description="被评论用户")
+    type = fields.CharField(max_length=50, null=False, description="评论类型")
     content = fields.TextField(null=False, description="评论内容")
     email = fields.CharField(max_length=50, null=False, description="邮箱")
     nickname = fields.CharField(max_length=25, null=False, description="用户名称")

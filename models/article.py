@@ -4,6 +4,7 @@ from .tags import Tag
 
 class Article(TimestampMixin):
     id = fields.IntField(pk=True, description="主键")
+    path = fields.CharField(max_length=100, null=False, unique=True, description="文章唯一索引")
     title = fields.CharField(max_length=100, description="标题")
     description = fields.CharField(max_length=150, description="摘要")
     content = fields.TextField(description="内容")
