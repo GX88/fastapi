@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 import config as f
+from utils import FileExecution
 
 from database import register_mysql, redis_client
 from core.middle import Middle
@@ -13,6 +14,7 @@ class MyFastAPI(FastAPI):
         super().__init__(*args, **kwargs)
         self.logger = logger
         self.redis = redis_client
+        self.project_path = f.PROJECT_PATH
 
 
 def create_app() -> MyFastAPI:
@@ -23,7 +25,7 @@ def create_app() -> MyFastAPI:
         docs_url=f.DOCS_URL
     )
 
-    # TODO: 添加事件监听事件
+    # TODO: 各类事件初始化
     register_init(app)
 
     # TODO: 注册中间件
@@ -50,8 +52,10 @@ def register_init(app: MyFastAPI):
         """
         app.logger.info("FastAPI已启动")
 
-        # TODO: 初始化数据连接
+        # TODO: 执行数据库初始化
         await register_mysql(app)
+        # TODO: 执行sql文件
+        # FileExecution(app.project_path)
         # TODO: 初始化redis连接
         app.redis.init_redis_connect(app.logger)
 

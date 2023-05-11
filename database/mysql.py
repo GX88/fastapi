@@ -30,11 +30,11 @@ async def register_mysql(app):
     # 注册数据库
 
     try:
-        db = pymysql.connect(host=f.MYSQL_HOST,
-                             port=int(f.MYSQL_PORT),
-                             user=f.MYSQL_USER,
-                             password=f.MYSQL_PASSWORD,
-                             charset='utf8mb4')
+        pymysql.connect(host=f.MYSQL_HOST,
+                        port=int(f.MYSQL_PORT),
+                        user=f.MYSQL_USER,
+                        password=f.MYSQL_PASSWORD,
+                        charset='utf8mb4')
         register_tortoise(
             app,
             config=ORM_CONFIG,
