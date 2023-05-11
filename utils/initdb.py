@@ -25,8 +25,8 @@ class initdb(object):
         self.init_database()
 
     def init_database(self):
-        if os.path.exists(os.path.join(os.getcwd(),'migrations')):
-            shutil.rmtree(os.path.join(os.getcwd(),'migrations'))
+        if os.path.exists(os.path.join(os.getcwd(), 'migrations')):
+            shutil.rmtree(os.path.join(os.getcwd(), 'migrations'))
             print("""\033[32m---> 删除冗余文件\033[0m""")
         cursor = self.db.cursor()
         sql = "CREATE DATABASE IF NOT EXISTS %s CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;" % self.database
@@ -46,11 +46,11 @@ class initdb(object):
             print('\033[32m---> 数据库写入成功\033[0m')
         return True
 
-        
     def __del__(self):
         try:
             self.db.close()
         except pymysql.Error as e:
             pass
+
 
 init_db = initdb()
