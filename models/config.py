@@ -1,7 +1,7 @@
-from tortoise import models, fields
+from .Mixin import TimestampMixin, fields
 
 
-class Config(models.Model):
+class Config(TimestampMixin):
     id = fields.IntField(pk=True, description="主键")
     name = fields.CharField(max_length=50, description="配置名称")
     value = fields.JSONField(description="配置值")
