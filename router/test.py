@@ -5,6 +5,7 @@ import time
 import requests
 import string
 from fastapi import APIRouter
+from utils import SendEmail
 
 test = APIRouter(prefix='/test')
 
@@ -42,3 +43,18 @@ async def config(url: str):
         'ticket': ticket,
         'url': url,
     }}
+
+
+@test.get('/mail')
+async def mail():
+    article = "测试文章"
+    nickname = "张三"
+    text = "这是一条测试评论"
+    ip = "122.122.122.122"
+    email = "akldjlkas@163.com"
+    admin_url = "https://www.白哲.com"
+    site = "白哲PM"
+    send_email = SendEmail(['2016415409@qq.com'])
+    await send_email.send(article=article, nickname=nickname, text=text, ip=ip, email=email, admin_url=admin_url,
+                          site=site)
+    return {'code': "200", 'msg': "success", 'data': {}}

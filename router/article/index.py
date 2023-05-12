@@ -42,6 +42,7 @@ async def index(aid: int):
 @article.post('/create', summary="创建文章", response_model=R)
 async def index(model: ArticleCreateWithTags):
     tag_list = model.tags
+    model.path = int(time.time())
     del model.tags
     post = await Article.create(**model.dict())
     if tag_list:

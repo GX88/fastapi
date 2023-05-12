@@ -8,7 +8,7 @@ ArticleGetAll = pydantic_model_creator(Article, name="文章查询返回模型")
 
 # 创建、更新模型
 ArticleCreate = pydantic_model_creator(Article, name="文章创建、修改模型",
-                                       exclude=("create_time", "update_time", "path",))
+                                       exclude=("create_time", "update_time",))
 
 # 前端返回全部文章模型
 ArticleLists = pydantic_model_creator(Article, exclude=("description", "content", "view", "font_count", "is_show",))
