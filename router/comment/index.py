@@ -9,8 +9,8 @@ comment = APIRouter(prefix='/comment')
 
 
 @comment.get('', summary='获取评论列表', description='获取文章评论列表', response_model=R[List[CommentList]])
-async def get_comment(article_id: int):
-    result = await Comment.filter(ArticleID=article_id).order_by('id').values()
+async def get_comment(aid: int):
+    result = await Comment.filter(ArticleID=aid).order_by('id').values()
     root = [i for i in result if i['cid'] == 0]
     child = [i for i in result if i['cid'] != 0]
     data = []
