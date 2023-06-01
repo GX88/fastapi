@@ -42,7 +42,8 @@ class SendEmail(object):
         from email.mime.text import MIMEText
         from email.utils import formataddr
 
-        msg = MIMEText(self.Template.format(**kwargs), 'html', self.MailConfig.value['Ecoding'])
+        # msg = MIMEText(self.Template.format(**kwargs), 'html', self.MailConfig.value['Ecoding'])
+        msg = MIMEText(self.Template, 'html', self.MailConfig.value['Ecoding'])
         msg['From'] = formataddr(pair=(self.MailConfig.value['FromName'], self.config['Email']))
         # 给多用户发送邮件
         msg['To'] = ','.join(self.ToMail)

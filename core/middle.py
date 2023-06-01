@@ -22,8 +22,11 @@ class Middle(object):
         ip = scope['client'][0]
         method = scope['method']
         path = scope['path']
-        user_agent = parse(scope['headers'][5][1].decode('utf-8'))
-        device, system, browser = str(user_agent).split('/')
+        try:
+            user_agent = parse(scope['headers'][5][1].decode('utf-8'))
+            device, system, browser = str(user_agent).split('/')
+        except:
+            device, system, browser = '未知', '未知', '未知'
 
         # 打印请求来源
 

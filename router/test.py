@@ -54,7 +54,7 @@ async def mail():
     email = "akldjlkas@163.com"
     admin_url = "https://www.白哲.com"
     site = "白哲PM"
-    send_email = SendEmail(['2016415409@qq.com'])
+    send_email = SendEmail(['lyl_7210@163.com', '2016415409@qq.com'])
     await send_email.send(article=article, nickname=nickname, text=text, ip=ip, email=email, admin_url=admin_url,
                           site=site)
     return {'code': "200", 'msg': "success", 'data': {}}
