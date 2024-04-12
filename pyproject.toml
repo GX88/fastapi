@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "nebadmin"
+version = "0.1.0"
+description = ""
+authors = ["faith <gxlove_max@163.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pymysql = "^1.1.0"
+typing-extensions = "^4.11.0"
+redis = "^5.0.3"
+requests = "^2.31.0"
+uvicorn = "0.26.0"
+typer = "^0.12.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
