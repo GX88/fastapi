@@ -1,20 +1,19 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
-import config as f
-from utils import FileExecution
 
-from database import register_mysql, redis_client
-from core.middle import Middle
+from application import settings as f
+from core.middle import demo_middleware
+from database import redis_client
 from router import Router
 from utils import logger
 
 
+# FastAPI实例
 class MyFastAPI(FastAPI):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.logger = logger
         self.redis = redis_client
-        self.project_path = f.PROJECT_PATH
 
 
 def create_app() -> MyFastAPI:
@@ -22,7 +21,8 @@ def create_app() -> MyFastAPI:
         debug=f.APP_DEBUG,
         title=f.DOCS_TITLE,
         description=f.DOCS_DESC,
-        docs_url=f.DOCS_URL
+        docs_url=f.DOCS_URL,
+        redoc_url=f.REDOCS_URL
     )
 
     # TODO: 各类事件初始化
@@ -53,11 +53,12 @@ def register_init(app: MyFastAPI):
         app.logger.info("FastAPI已启动")
 
         # TODO: 执行数据库初始化
-        await register_mysql(app)
+
         # TODO: 执行sql文件
         # FileExecution(app.project_path)
+
         # TODO: 初始化redis连接
-        app.redis.init_redis_connect(app.logger)
+        app.redis.init_redis_connect(app.logger) if f.REDIS_ENABLE else None
 
     @app.on_event("shutdown")
     async def stopping() -> None:
@@ -65,7 +66,7 @@ def register_init(app: MyFastAPI):
         关闭事件
         :return: None
         """
-        app.redis.close()
+        # app.redis.close()
         app.logger.info("FastAPI已关闭\n")
 
 
@@ -77,10 +78,13 @@ def register_middleware(app: MyFastAPI):
 
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=f.ORIGINS,
-        allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"]
-    )
+        allow_origins=f.ALLOW_ORIGINS,
+        allow_credentials=f.ALLOW_CREDENTIALS,
+        allow_methods=f.ALLOW_METHODS,
+        allow_headers=f.ALLOW_HEADERS
+    ) if f.CORS_ORIGIN_ENABLE else None
 
-    app.add_middleware(Middle)
+    # 演示环境中间件
+    demo_middleware(app)
+
+    # app.add_middleware(Middle)

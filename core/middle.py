@@ -4,47 +4,25 @@
 @Author: Faith
 @Des: 中间件
 """
-from starlette.types import ASGIApp, Receive, Scope, Send, Message
-from fastapi import Request
-from user_agents import parse
-from models import Log
+from fastapi import Request, FastAPI
+from application.settings import OPERATION_RECORD_METHOD, IGNORE_OPERATION_FUNCTION, \
+    DEMO_WHITE_LIST_PATH, DEMO
+from utils.response import ErrorResponse
 
 
-class Middle(object):
-    def __init__(self, app: ASGIApp) -> None:
-        self.app = app
+# 演示环境中间件，取消所有POST,DELETE,PUT操作权限
+def demo_middleware(app: FastAPI):
+    """
+    演示环境中间件，取消所有POST,DELETE,PUT操作权限
+    :param app: FastAPI
+    :return: None
+    """
 
-    async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
-        if scope['type'] not in ["http", "websocket"]:
-            await self.app(scope, receive, send)
-            return
+    @app.middleware("http")
+    async def demo(request: Request, call_next):
+        path = request.scope.get("path")
+        if request.method != "GET" and path not in DEMO_WHITE_LIST_PATH:
+            return ErrorResponse(msg="演示环境，不支持此操作")
+        return await call_next(request)
 
-        ip = scope['client'][0]
-        method = scope['method']
-        path = scope['path']
-        try:
-            user_agent = parse(scope['headers'][5][1].decode('utf-8'))
-            device, system, browser = str(user_agent).split('/')
-        except:
-            device, system, browser = '未知', '未知', '未知'
-
-        # 打印请求来源
-
-        req = Request(scope, receive, send)
-
-        async def send_wrapper(message: Message) -> None:
-            if message['type'] == 'http.response.start':
-                # 获取响应状态码
-                status = message['status']
-                # await Log.create(ip=ip, method=method, path=path, status=status, device=device, system=system,
-                #                  browser=browser)
-                if 200 <= status < 400:
-                    # 如果请求成功，则打印请求成功信息
-                    ...
-                else:
-                    # 如果请求失败，则打印请求失败信息
-                    print("Request failed")
-
-            await send(message)
-
-        await self.app(scope, receive, send_wrapper)
+    return app

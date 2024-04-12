@@ -26,7 +26,7 @@ async def login(body: dict):
                 'refreshToken': "eyJhbGciOiJIUzUxMiJ9.commonRefresh",
                 'expires': "2023/10/30 00:00:00"
             }
-        };
+        }
 
 
 @mock.get('/getAsyncRoutes')
@@ -108,4 +108,12 @@ async def get_router():
     return {
         'success': True,
         'data': [permissionRouter, creationRouter, logRouter]
+    }
+
+
+@mock.post('/test')
+async def test(body: dict):
+    return {
+        'success': True,
+        'data': body
     }

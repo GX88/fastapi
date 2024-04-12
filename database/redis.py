@@ -16,7 +16,7 @@ https://github.com/underyx/flask-redis/blob/master/flask_redis/client.py
 redis 连接
 
 """
-import config as f
+from application import config as f
 from redis import Redis, AuthenticationError
 
 

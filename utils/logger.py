@@ -23,13 +23,15 @@ class LoggerFactory(object):
         handlers = []
 
         # add file handler for normal logs
-        file_handler = RotatingFileHandler(filename=self.log_file, maxBytes=MAX_LOG_SIZE, backupCount=BACKUP_COUNT, encoding='utf-8')
+        file_handler = RotatingFileHandler(filename=self.log_file, maxBytes=MAX_LOG_SIZE, backupCount=BACKUP_COUNT,
+                                           encoding='utf-8')
         file_handler.setFormatter(logging.Formatter(LOG_FORMAT))
         file_handler.setLevel(log_level)
         handlers.append(file_handler)
 
         # add file handler for error logs
-        error_handler = RotatingFileHandler(filename=self.error_file, maxBytes=MAX_LOG_SIZE, backupCount=BACKUP_COUNT, encoding='utf-8')
+        error_handler = RotatingFileHandler(filename=self.error_file, maxBytes=MAX_LOG_SIZE, backupCount=BACKUP_COUNT,
+                                            encoding='utf-8')
         error_handler.setFormatter(logging.Formatter(ERROR_FORMAT))
         error_handler.setLevel(logging.ERROR)
         handlers.append(error_handler)
@@ -47,8 +49,8 @@ class LoggerFactory(object):
         return logger
 
 
-log_file = "app.log"
-error_file = "app_error.log"
+logs_file = "app.log"
+errors_file = "app_error.log"
 
 MAX_LOG_SIZE = 2 * 1024 * 1024  # 2 MB
 BACKUP_COUNT = 5  # Number of backup logs
@@ -56,5 +58,5 @@ BACKUP_COUNT = 5  # Number of backup logs
 LOG_FORMAT = '%(levelname)s :    %(asctime)s - %(message)s'
 ERROR_FORMAT = '%(levelname)s:   %(asctime)s - %(module)s.py:%(lineno)d行 - %(message)s'
 
-logger_factory = LoggerFactory(log_file, error_file)
+logger_factory = LoggerFactory(logs_file, errors_file)
 logger = logger_factory.create_logger()

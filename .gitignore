@@ -6,5 +6,5 @@
 *.lock
 Pipfile
 
-/config/dev.py
+/application/config/development.py
 /migrations
